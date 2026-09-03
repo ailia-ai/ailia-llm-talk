@@ -31,8 +31,6 @@ class S2T():
     def dummy_inference(self):
         audio_waveform, sampling_rate = librosa.load("reference_audio_captured_by_ax.wav", mono = True)
         recognized_text = self.speech.transcribe(audio_waveform, sampling_rate, lang="auto")
-        for text in recognized_text:
-            print("Dummy inference result", text)
 
     def process(self, buf, sample_rate, vad_enable):
         if vad_enable:
@@ -45,7 +43,8 @@ class S2T():
         return transcript
     
     def callback(self, text):
-        print(text)
+        if self.transcripting:
+            print(text)
 
     def whisper_ailia(self, buf, sample_rate, vad_enable):
         self.init_ailia_speech()
