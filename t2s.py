@@ -60,8 +60,9 @@ class T2S():
 				print("GPU not found. We will use CPU.")
 			self.voice = ailia_voice.GPTSoVITSV2Pro(env_id = env_id)
 			self.voice.initialize_model(model_path = "./models/", distill = "small")
-			self.dummy_inference()
 			self.first = False
+
+			self.dummy_inference()
 
 	def dummy_inference(self):
 		self.speech("test", dummy_inference = True)
@@ -121,5 +122,6 @@ class T2S():
 			return None
 
 		# Save result
-		soundfile.write(speech_file_path, buf, sampling_rate)
+		if speech_file_path is not None:
+			soundfile.write(speech_file_path, buf, sampling_rate)
 		return sampling_rate

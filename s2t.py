@@ -24,11 +24,9 @@ class S2T():
             self.speech = ailia_speech.Whisper(callback=self.callback, env_id = env_id)
             self.speech.initialize_model(model_path = "./models/", model_type = ailia_speech.AILIA_SPEECH_MODEL_TYPE_WHISPER_MULTILINGUAL_LARGE_V3_TURBO)
             self.speech.set_silent_threshold(silent_threshold = 0.25, speech_sec = 1.0, no_speech_sec = 0.5)
-
-            # Dummy Inference for preload model
-            self.dummy_inference()
-
             self.first = False
+
+            self.dummy_inference()
 
     def dummy_inference(self):
         audio_waveform, sampling_rate = librosa.load("reference_audio_captured_by_ax.wav", mono = True)
