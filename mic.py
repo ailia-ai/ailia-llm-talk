@@ -21,7 +21,7 @@ class Microphone():
 
 	def step(self):
 		data = self.stream.read(self.chunk_size, exception_on_overflow = False)
-		frame = np.fromstring(data, dtype=np.int16)
+		frame = np.frombuffer(data, dtype=np.int16)
 
 		frame = frame.astype(np.float32) / 32767.0
 		self.volume = np.max(frame)

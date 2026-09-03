@@ -25,12 +25,13 @@ def check_is_english(text):
 	
 voice_queue = []
 voice_samplerate = 0
+speaker_channels = 2
 
 def speaker_process():
 	default_speaker = soundcard.default_speaker()
 	while True:
-		if len(voice_queue) > 0:
-			with default_speaker.player(samplerate=voice_samplerate) as sp:
+		if len(voice_queue) > 0 and voice_samplerate > 0:
+			with default_speaker.player(samplerate=voice_samplerate, channels=speaker_channels) as sp:
 				data, _ = soundfile.read(voice_queue[0])
 				sp.play(data)
 				voice_queue.pop(0)
