@@ -60,7 +60,11 @@ class T2S():
 				print("GPU not found. We will use CPU.")
 			self.voice = ailia_voice.GPTSoVITSV2Pro(env_id = env_id)
 			self.voice.initialize_model(model_path = "./models/", distill = "small")
+			self.dummy_inference()
 			self.first = False
+
+	def dummy_inference(self):
+		self.speech("test", dummy_inference = True)
 
 	def split_text_by_punctuation(self, text, is_english):
 		# 句読点でテキストを分割
@@ -70,7 +74,7 @@ class T2S():
 			sentences = re.split(r'(?<=[、。！？])', text)
 		return [sentence.strip() for sentence in sentences if sentence]
 
-	def speech(self, text):
+	def speech(self, text, dummy_inference = False):
 		dir_name = "./chat_verbally/audio/"
 		if not os.path.exists(dir_name):
 			os.makedirs(dir_name)
@@ -90,7 +94,8 @@ class T2S():
 
 			global voice_queue, voice_samplerate
 			voice_samplerate = samplerate
-			voice_queue.append(speech_file_path)
+			if not dummy_inference:
+				voice_queue.append(speech_file_path)
 			self.cnt = self.cnt + 1
 
 		while True:

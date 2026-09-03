@@ -1,5 +1,7 @@
 ﻿import ailia_speech
 import ailia
+import numpy
+import librosa
 
 class S2T():
     transcript = ""
@@ -22,7 +24,17 @@ class S2T():
             self.speech = ailia_speech.Whisper(callback=self.callback, env_id = env_id)
             self.speech.initialize_model(model_path = "./models/", model_type = ailia_speech.AILIA_SPEECH_MODEL_TYPE_WHISPER_MULTILINGUAL_LARGE_V3_TURBO)
             self.speech.set_silent_threshold(silent_threshold = 0.25, speech_sec = 1.0, no_speech_sec = 0.5)
+
+            # Dummy Inference for preload model
+            self.dummy_inference()
+
             self.first = False
+
+    def dummy_inference(self):
+        audio_waveform, sampling_rate = librosa.load("reference_audio_captured_by_ax.wav", mono = True)
+        recognized_text = self.speech.transcribe(audio_waveform, sampling_rate, lang="auto")
+        for text in recognized_text:
+            print("Dummy inference result", text)
 
     def process(self, buf, sample_rate, vad_enable):
         if vad_enable:
@@ -41,10 +53,10 @@ class S2T():
         self.init_ailia_speech()
 
         if vad_enable:
-            recognized_text = self.speech.transcribe(buf, sample_rate, lang="en")
+            recognized_text = self.speech.transcribe(buf, sample_rate, lang="auto")
         else:
             complete = False
-            recognized_text = self.speech.transcribe_step(buf, sample_rate, complete, lang="ja")
+            recognized_text = self.speech.transcribe_step(buf, sample_rate, complete, lang="auto")
         transcript = ""
         for text in recognized_text:
             transcript = transcript + text["text"]
