@@ -2,7 +2,7 @@ from chain import Chain
 from t2s import T2S
 	
 
-WEIGHT_PATH = './models/gemma-2-2b-it-Q4_K_M.gguf'
+WEIGHT_PATH = './models/gemma-4-E2B-it-Q4_K_M.gguf'
 MODEL_PATH = None
 REMOTE_PATH = 'https://storage.googleapis.com/ailia-models/gemma/'
 

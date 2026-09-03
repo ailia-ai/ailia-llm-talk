@@ -58,8 +58,8 @@ class T2S():
 					env_id = env.id
 			if env_id == -1:
 				print("GPU not found. We will use CPU.")
-			self.voice = ailia_voice.GPTSoVITS(env_id = env_id)
-			self.voice.initialize_model(model_path = "./models/")
+			self.voice = ailia_voice.GPTSoVITSV2Pro(env_id = env_id)
+			self.voice.initialize_model(model_path = "./models/", distill = "small")
 			self.first = False
 
 	def split_text_by_punctuation(self, text, is_english):

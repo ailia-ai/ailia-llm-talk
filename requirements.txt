@@ -6,7 +6,7 @@ ailia-voice
 ailia-speech
 ailia-llm
 soundfile
-numpy<2
+numpy
 pyaudio
 langdetect
 opencv-python
