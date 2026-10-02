@@ -16,7 +16,7 @@ class Chain():
 
 		if self.first:
 			self.llm = ailia_llm.AiliaLLM()
-			self.llm.open("./models/gemma-2-2b-it-Q4_K_M.gguf", n_ctx = 8192)
+			self.llm.open("./models/gemma-4-E2B-it-Q4_K_M.gguf", n_ctx = 8192)
 			self.first = False
 
 		messages = []
